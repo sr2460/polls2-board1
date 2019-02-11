@@ -1,0 +1,61 @@
+
+{% extends 'board/base.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'board/style.css' %}">
+
+
+<div class="alert alert-primary" role="alert">
+<strong><p class="w-normal"><a href="http://localhost:8000/polls/">現在投票中のアンケート一覧{% for questions in question %}{% if questions.is_date_limit %}<li>{{ questions.question_text }}{% endif %}{% endfor %}</li></a></p></strong>
+<!--- サーバー環境で書き換え<a href="http://160.16.55.98/polls/"> --->
+</div>
+
+
+
+<div class="mb-5">
+<div class="ml-md-2">
+  <form action="" method="POST" enctype="multipart/form-data">
+    {{ form.as_p }}
+  <button type="submit">送信</button>
+    {% csrf_token %}
+  </form>
+
+
+</div>
+</div>
+
+{% for post in post_list %}
+
+
+
+  <div class="alert alert-success" role="alert"><p class="w-normal"><strong>{{ post.name }}</strong> さん</p></div>
+  <div class="mb-2">
+    <div class="ml-md-2">
+    <p class="w-normal">{{ post.text | linebreaksbr }}</p>
+    </div>
+      {% if post.file %}
+        <p><img src="{{ post.file.url }}"></p>
+
+      {% endif %}
+
+  <div class="ml-md-2">
+        <p>{{ post.date }}</p>
+
+
+    <form action="{% url 'board:good' post.pk %}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="good" value="いいね"　id="test">（{{ post.good }} いいね）<p  style="color:red"><font size="1"><strong>押すと1ページ目まで戻ってしまいます！（いつか直す！)</strong></font></p>
+    </form>
+</div>
+
+
+{% endfor %}
+
+{% include 'board/page4.html' %}
+
+</div>
+
+
+{% endblock %}

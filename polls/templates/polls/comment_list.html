@@ -1,0 +1,17 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+{% for list in comment_ichiran %}
+  <div class="alert alert-success" role="alert"><strong><p class="w-normal">[{{ list.choice }}]</p></strong></div>
+  <p class="w-normal">{{ list.choice_comment_text | linebreaksbr}}</p>
+{% endfor %}
+</tbody>
+</table>
+
+<p><a href="{% url 'polls:results' question.pk %}">投票結果に戻る</a></p>
+<p><a href="{% url 'polls:index' %}">アンケートの一覧へ</a></p>
+<p><a href="http://localhost:8000/board/">さらに語り合いたい人は掲示板へ</a></p>
+<!--- サーバー環境で書き換え<p><a href="http://160.16.55.98/board/">さらに語り合いたい人は掲示板へ</a></p>""" --->
+{% endblock %}

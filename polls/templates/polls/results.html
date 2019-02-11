@@ -1,0 +1,31 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<h1>{{ question.question_text }}</h1>
+
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>選択</th>
+      <th>投票数</th>
+    </tr>
+  </thead>
+  <tbody>
+　{% for choice in question.choice_set.all %}
+  　<tr>
+      <td>{{ choice.choice_text }}</td>
+      <td> {{ choice.votes }}票</td>
+    </tr>
+
+ {% endfor %}
+  </tbody>
+</table>
+
+<a>投票ありがとうございました</a><a href="{% url 'polls:comment_list' question.id %}">コメント一覧</a>
+<p><a href="{% url 'polls:index' %}">アンケートの一覧へ</a></p>
+<p><a href="http://localhost:8000/board/">さらに語り合いたい人は掲示板へ</a></p>
+<!--- サーバー環境で書き換え<p><a href="http://160.16.55.98/board/">さらに語り合いたい人は掲示板へ</a></p>""" --->
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<strong>{{ question.question_text }}の投票画面</strong>
+
+<br>
+<strong><a href="{% url 'polls:results' question.id %}">結果を見る</a></strong>
+<p>集計期間{{ question.pub_date}}～{{ question.date_limit}}</p>
+
+{% if question.is_date_limit %}
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="POST">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        {{ field }}
+        {{ field.errors }}
+    </div>
+    {% endfor %}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-dark">送信</button>
+</form>
+
+{% endif %}
+{% endblock %}

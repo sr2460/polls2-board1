@@ -1,0 +1,13 @@
+body {
+    background-image: url("/static/board/images/back_color.png");
+}
+
+p.w-normal{
+  word-wrap: break-word;
+}
+
+
+img {
+max-width: 100%;
+height: auto;
+}
